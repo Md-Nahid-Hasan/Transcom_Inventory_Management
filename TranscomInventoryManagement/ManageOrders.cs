@@ -15,6 +15,7 @@ namespace TranscomInventoryManagement
     public partial class ManageOrders : Form
     {
         public ManageOrders()
+
         {
             InitializeComponent();
             populate();
@@ -162,7 +163,7 @@ namespace TranscomInventoryManagement
             }
             else if(Convert.ToInt32(qty.Text)>stock)
             {
-                MessageBox.Show("Sorry,No Enough Stock Available!");
+                MessageBox.Show("Sorry, Not Enough Stock Available!");
             }
             else
             {
