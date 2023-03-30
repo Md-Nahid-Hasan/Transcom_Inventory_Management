@@ -122,24 +122,31 @@ namespace TranscomInventoryManagement
             //fillSearchCombo();
         }
 
-        //void updateProduct()
-        //{
-        //    con.Open();
-        //    int id = Convert.ToInt32(productsGV.SelectedRows[0].Cells[0].Value.ToString());
-        //    int newQty = stock - Convert.ToInt32(qty.Text);
-        //    string query = "update ProductTbl set ProductQty = '" + newQty + "' where ProductID = '" + id + "'";
-        //    SqlCommand cmd = new SqlCommand(query, con);
-        //    cmd.ExecuteNonQuery();
-        //    MessageBox.Show("Update Successfully!");
-        //    populateProduct();
-        //    con.Close();
-        //}
+       /* void updateProduct()
+        {
+            con.Open();
+            int id = Convert.ToInt32(productsGV.SelectedRows[0].Cells[0].Value.ToString());
+            int newQty = stock - Convert.ToInt32(qty.Text);
+            string query = "update ProductTbl set ProductQty = '" + newQty + "' where ProductID = '" + id + "'";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.ExecuteNonQuery();
+            MessageBox.Show("Update Successfully!");
+            populateProduct();
+            con.Close();
+        }*/
 
         int num = 0;
         int flag = 0;
         int stock;
         string product;
         int quantity, totalPrice, uPrice;
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            populateProduct();
+        }
+
+        //DataTable table = new DataTable();
 
         private void productsGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -150,7 +157,6 @@ namespace TranscomInventoryManagement
             totalPrice = quantity * uPrice;
             flag = 1;
         }
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
             if(qty.Text == "")
@@ -170,18 +176,22 @@ namespace TranscomInventoryManagement
                 num = num + 1;
                 quantity = Convert.ToInt32(qty.Text);
                 totalPrice = quantity * uPrice;
-
-                //table.Rows.Add(num, product, quantity, uPrice, totalPrice);
-                //ordersGV.DataSource = table;
-
-                //DataTable dt = new DataTable();
-                //SqlDataAdapter adapter = new SqlDataAdapter();
-                //adapter.Fill(dt);
-                //ordersGV.DataSource = dt;
+                DataTable table = new DataTable();
+                table.Columns.Add("Number");
+                table.Columns.Add("Product");
+                table.Columns.Add("Quantity");
+                table.Columns.Add("Price");
+                table.Columns.Add("Total Price");
+                table.Rows.Add(num,product,quantity,uPrice,totalPrice);
+                ordersGV.DataSource = table;
                 flag = 0;
-                MessageBox.Show("Added Successfully!");
-                //MessageBox.Show(Convert.ToString(totalPrice));
+                MessageBox.Show("Added to order!");
+                qty.Text = "";
             }
+            //table.Rows.Add(num,product, quantity, uPrice, totalPrice);
+            ////ordersGV.DataSource = table;
+            //flag = 0;
+            //MessageBox.Show("Added Successfully!");
         }
     }
 }
