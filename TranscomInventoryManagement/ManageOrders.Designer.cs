@@ -53,6 +53,8 @@
             this.custName = new System.Windows.Forms.TextBox();
             this.ordersGV = new System.Windows.Forms.DataGridView();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.OrderTotAmount = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.customersGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.productsGV)).BeginInit();
@@ -140,6 +142,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.customersGV.DefaultCellStyle = dataGridViewCellStyle1;
+            this.customersGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.customersGV.Location = new System.Drawing.Point(12, 134);
             this.customersGV.Name = "customersGV";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -157,7 +160,7 @@
             // 
             // custID
             // 
-            this.custID.Location = new System.Drawing.Point(12, 344);
+            this.custID.Location = new System.Drawing.Point(12, 315);
             this.custID.Name = "custID";
             this.custID.PlaceholderText = "CustomerID";
             this.custID.Size = new System.Drawing.Size(164, 23);
@@ -165,7 +168,7 @@
             // 
             // ordID
             // 
-            this.ordID.Location = new System.Drawing.Point(12, 306);
+            this.ordID.Location = new System.Drawing.Point(12, 286);
             this.ordID.Name = "ordID";
             this.ordID.PlaceholderText = "OrderID";
             this.ordID.Size = new System.Drawing.Size(164, 23);
@@ -175,7 +178,7 @@
             // 
             this.dateTimePicker1.CalendarForeColor = System.Drawing.SystemColors.Desktop;
             this.dateTimePicker1.CalendarMonthBackground = System.Drawing.Color.Red;
-            this.dateTimePicker1.Location = new System.Drawing.Point(12, 441);
+            this.dateTimePicker1.Location = new System.Drawing.Point(12, 401);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(164, 23);
             this.dateTimePicker1.TabIndex = 33;
@@ -186,7 +189,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.label4.Location = new System.Drawing.Point(12, 410);
+            this.label4.Location = new System.Drawing.Point(12, 370);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(152, 28);
             this.label4.TabIndex = 34;
@@ -218,6 +221,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.productsGV.DefaultCellStyle = dataGridViewCellStyle3;
+            this.productsGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.productsGV.Location = new System.Drawing.Point(339, 134);
             this.productsGV.Name = "productsGV";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -228,6 +232,7 @@
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.productsGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.productsGV.RowHeadersVisible = false;
             this.productsGV.RowTemplate.Height = 25;
             this.productsGV.Size = new System.Drawing.Size(477, 138);
             this.productsGV.TabIndex = 36;
@@ -252,6 +257,7 @@
             this.qty.PlaceholderText = "Enter Quantity";
             this.qty.Size = new System.Drawing.Size(164, 23);
             this.qty.TabIndex = 39;
+            this.qty.TextChanged += new System.EventHandler(this.qty_TextChanged);
             // 
             // btnAdd
             // 
@@ -268,7 +274,7 @@
             // 
             // custName
             // 
-            this.custName.Location = new System.Drawing.Point(12, 384);
+            this.custName.Location = new System.Drawing.Point(12, 344);
             this.custName.Name = "custName";
             this.custName.PlaceholderText = "CustomerName";
             this.custName.Size = new System.Drawing.Size(164, 23);
@@ -288,7 +294,8 @@
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.ordersGV.DefaultCellStyle = dataGridViewCellStyle5;
-            this.ordersGV.Location = new System.Drawing.Point(297, 326);
+            this.ordersGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.ordersGV.Location = new System.Drawing.Point(339, 315);
             this.ordersGV.Name = "ordersGV";
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
@@ -298,8 +305,9 @@
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.ordersGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.ordersGV.RowHeadersVisible = false;
             this.ordersGV.RowTemplate.Height = 25;
-            this.ordersGV.Size = new System.Drawing.Size(519, 138);
+            this.ordersGV.Size = new System.Drawing.Size(477, 138);
             this.ordersGV.TabIndex = 43;
             // 
             // btnRefresh
@@ -315,11 +323,33 @@
             this.btnRefresh.UseVisualStyleBackColor = false;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
+            // OrderTotAmount
+            // 
+            this.OrderTotAmount.Enabled = false;
+            this.OrderTotAmount.Location = new System.Drawing.Point(654, 460);
+            this.OrderTotAmount.Name = "OrderTotAmount";
+            this.OrderTotAmount.Size = new System.Drawing.Size(164, 23);
+            this.OrderTotAmount.TabIndex = 45;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label6.ForeColor = System.Drawing.Color.Red;
+            this.label6.Location = new System.Drawing.Point(494, 455);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(164, 28);
+            this.label6.TabIndex = 46;
+            this.label6.Text = "Total Amount";
+            // 
             // ManageOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 511);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.OrderTotAmount);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.ordersGV);
             this.Controls.Add(this.custName);
@@ -370,5 +400,7 @@
         private TextBox custName;
         private DataGridView ordersGV;
         private Button btnRefresh;
+        private TextBox OrderTotAmount;
+        private Label label6;
     }
 }

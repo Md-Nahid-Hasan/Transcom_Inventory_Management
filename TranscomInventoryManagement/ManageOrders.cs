@@ -1,4 +1,5 @@
 ﻿//using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -122,44 +123,50 @@ namespace TranscomInventoryManagement
             //fillSearchCombo();
         }
 
-       /* void updateProduct()
-        {
-            con.Open();
-            int id = Convert.ToInt32(productsGV.SelectedRows[0].Cells[0].Value.ToString());
-            int newQty = stock - Convert.ToInt32(qty.Text);
-            string query = "update ProductTbl set ProductQty = '" + newQty + "' where ProductID = '" + id + "'";
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.ExecuteNonQuery();
-            MessageBox.Show("Update Successfully!");
-            populateProduct();
-            con.Close();
-        }*/
-
         int num = 0;
         int flag = 0;
-        int stock;
+        int stock,id,qt;
         string product;
-        int quantity, totalPrice, uPrice;
+        int totalPrice, uPrice;
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             populateProduct();
         }
 
-        //DataTable table = new DataTable();
+        private void qty_TextChanged(object sender, EventArgs e)
+        {
+            qt = Convert.ToInt32(qty.Text);
+        }
 
         private void productsGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            id = Convert.ToInt32(productsGV.Rows[e.RowIndex].Cells[0].Value.ToString());
             product = productsGV.Rows[e.RowIndex].Cells[1].Value.ToString();
             //quantity = Convert.ToInt32(qty.Text);
             stock = Convert.ToInt32(productsGV.Rows[e.RowIndex].Cells[2].Value.ToString());
             uPrice = Convert.ToInt32(productsGV.Rows[e.RowIndex].Cells[3].Value.ToString());
-            totalPrice = quantity * uPrice;
+            //totalPrice = quantity * uPrice;
             flag = 1;
+        }
+        void updateProduct()
+        {
+            con.Open();
+            //int id = Convert.ToInt32(productsGV.Rows.GetRowCount(DataGridViewElementStates.Selected));
+            //int id = Convert.ToInt32(productsGV.SelectedRows[2].Cells[0].Value.ToString());
+            //int id = 5;
+            int newQty = (stock - qt);
+            string query = "update ProductTbl set ProductQty = " +newQty+ " where ProductID = " +id+ ";";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.ExecuteNonQuery();
+            MessageBox.Show("Update Successfully!");
+            con.Close();
+            populateProduct();
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if(qty.Text == "")
+            int sum = 0;
+            if (qty.Text == "")
             {
                 MessageBox.Show("Quantity Required!");
             }
@@ -174,24 +181,26 @@ namespace TranscomInventoryManagement
             else
             {
                 num = num + 1;
-                quantity = Convert.ToInt32(qty.Text);
-                totalPrice = quantity * uPrice;
+                qt = Convert.ToInt32(qty.Text);
+                totalPrice = qt * uPrice;
                 DataTable table = new DataTable();
                 table.Columns.Add("Number");
                 table.Columns.Add("Product");
                 table.Columns.Add("Quantity");
                 table.Columns.Add("Price");
                 table.Columns.Add("Total Price");
-                table.Rows.Add(num,product,quantity,uPrice,totalPrice);
+                table.Rows.Add(num, product, qt, uPrice, totalPrice);
                 ordersGV.DataSource = table;
                 flag = 0;
                 MessageBox.Show("Added to order!");
-                qty.Text = "";
+                //qty.Text = "";
+                /*int id = Convert.ToInt32(productsGV.SelectedRows[0].Cells[0].Value.ToString());
+                Console.WriteLine(id);*/
             }
-            //table.Rows.Add(num,product, quantity, uPrice, totalPrice);
-            ////ordersGV.DataSource = table;
-            //flag = 0;
-            //MessageBox.Show("Added Successfully!");
+            qty.Text = "";
+            sum = sum + totalPrice;
+            OrderTotAmount.Text = " BDT. " + sum.ToString();
+            updateProduct();
         }
     }
 }

@@ -154,6 +154,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.productsGV.DefaultCellStyle = dataGridViewCellStyle1;
+            this.productsGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.productsGV.Location = new System.Drawing.Point(285, 193);
             this.productsGV.Name = "productsGV";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
